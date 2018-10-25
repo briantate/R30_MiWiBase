@@ -9,7 +9,17 @@
 #include "app.h"
 #include "debug_interface.h"
 
-
+void AppTask(void)
+{
+	if(port_pin_get_input_level(SW0))
+	{
+		port_pin_set_output_level(LED1, LED_OFF);
+	}
+	else
+	{
+		port_pin_set_output_level(LED1,LED_ON);
+	}
+}
 
 void ReceivedDataIndication (RECEIVED_MESSAGE *ind)
 {

@@ -11,6 +11,7 @@
 
 #include "miwi_api.h"
 
+void AppTask(void);
 void ReceivedDataIndication (RECEIVED_MESSAGE *ind);
 
 

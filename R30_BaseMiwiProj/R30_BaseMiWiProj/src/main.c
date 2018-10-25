@@ -32,8 +32,11 @@
 #include "rf_transceiver.h"
 #include "network_management.h"
 #include "miwi_api.h"
+#include "app.h"
 
 void ReadMacAddress(void);
+
+static volatile bool netRole;
 
 int main (void)
 {
@@ -41,24 +44,21 @@ int main (void)
 	delay_init(); //used to to initialize radio interface
 	configure_console();
 	
-	printf("R30 Base Project\r\n");
+	printf("R30 Base MiWi Project\r\n");
 	uint32_t cpuClock = system_cpu_clock_get_hz();
 	DEBUG_PRINT(printf("CPU clock %lu Hz\r\n", cpuClock));
 
 	TransceiverConfig(); //initialize pins to the radio
 	
-	NetworkInit(NETWORK_FREEZER_OFF);
+	//check switch state at startup to determine network role
+	netRole = port_pin_get_input_level(SW0);   
+	port_pin_set_output_level(LED0, !netRole); //LED on if PAN coordinator
+	
+	NetworkInit(NETWORK_FREEZER_OFF, netRole);
 	
 	while(1)
 	{
-		if(port_pin_get_input_level(SW0))
-		{
-			port_pin_set_output_level(LED1, LED_OFF);
-		}
-		else
-		{
-			port_pin_set_output_level(LED1,LED_ON);
-		}
+		AppTask();
 		NetworkTasks();
 	}
 }
