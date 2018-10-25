@@ -51,7 +51,7 @@ void NetworkInit(bool freezer_enable)
 	 DEBUG_PRINT(printf("start connection\r\n"));
 	 MiApp_StartConnection(START_CONN_DIRECT, 10, 0, Connection_Confirm);
 	 
-//	 role = true; //true = PAN coordinator, false = end device
+	 role = true; //true = PAN coordinator, false = end device
 //	 nvmPutMyRole(&role);  // Saving the Role of the device
 	 
 }
