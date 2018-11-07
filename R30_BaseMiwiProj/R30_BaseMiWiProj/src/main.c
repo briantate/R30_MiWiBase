@@ -42,6 +42,7 @@ int main (void)
 {
 	system_init();
 	delay_init(); //used to to initialize radio interface
+	SYS_TimerInit();
 	configure_console();
 	
 	printf("R30 Base MiWi Project\r\n");

@@ -77,6 +77,26 @@ static void Connection_Confirm(miwi_status_t status)
 			DEBUG_PRINT(printf("MEMORY_UNAVAILABLE\r\n"));
 			break;
 		}
+		case ERR_TX_FAIL:
+		{
+			DEBUG_PRINT(printf("ERR_TX_FAIL\r\n"));
+			break;
+		}
+		case ERR_TRX_FAIL:
+		{
+			DEBUG_PRINT(printf("ERR_TRX_FAIL\r\n"));
+			break;
+		}
+		case ERR_INVALID_INPUT:
+		{
+			DEBUG_PRINT(printf("ERR_INVALID_INPUT\r\n"));
+			break;
+		}
+		default:
+		{
+			DEBUG_PRINT(printf("connection fail? default case\r\n"));
+			break;
+		}
 	}
 }
 
@@ -111,7 +131,7 @@ void NetworkInit(bool freezer_enable, bool networkRole)
 	{
 		DEBUG_PRINT(printf("Role = PAN Coordinator\r\n"));
 		DEBUG_PRINT(printf("start PAN\r\n"));
-		MiApp_StartConnection(START_CONN_DIRECT, 10, 0, Connection_Confirm);
+		MiApp_StartConnection(START_CONN_DIRECT, 10, (1L << myChannel), Connection_Confirm);
 	}
 	else
 	{
